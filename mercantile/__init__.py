@@ -35,10 +35,10 @@ def truncate_lnglat(lng, lat):
         lng = 180.0
     elif lng < -180.0:
         lng = -180.0
-    if lat > 90.0:
-        lat = 90.0
-    elif lat < -90.0:
-        lat = -90.0
+    if lat > 85.0511:
+        lat = 85.0511
+    elif lat < -85.0511:
+        lat = -85.0511
     return lng, lat
 
 
@@ -59,9 +59,9 @@ def tile(lng, lat, zoom, truncate=False):
     lat = math.radians(lat)
     n = 2.0**zoom
     try:
-        xtile = int(math.floor((lng + 180.0) / 360.0*n))
-        ytile = int(math.floor((1.0 - math.log(
-            math.tan(lat) + (1.0/math.cos(lat))) / math.pi) / 2.0*n))
+        xtile = int(max(0,min(n-1,math.floor((lng + 180.0) / 360.0*n))))
+        ytile = int(max(0,min(n-1,math.floor((1.0 - math.log(
+            math.tan(lat) + (1.0/math.cos(lat))) / math.pi) / 2.0*n))))
     except ValueError:
         xtile = 0
         ytile = 0

@@ -83,8 +83,11 @@ def test_truncate_lng_over():
 
 
 def test_truncate_lat_under():
-    assert mercantile.truncate_lnglat(0, -91) == (0, -90)
+    assert mercantile.truncate_lnglat(0, -91) == (0, -85.0511)
 
 
 def test_truncate_lat_over():
-    assert mercantile.truncate_lnglat(0, 91) == (0, 90)
+    assert mercantile.truncate_lnglat(0, 91) == (0, 85.0511)
+
+def test_global():
+    assert len(list(mercantile.tiles(-180, -90, 180, 90, [1], truncate=True))) == 4
